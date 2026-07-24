@@ -4,4 +4,4 @@
 - Martina Veschi
 - Lorenzo Baracchi
 - Kawtar Ouzif
-- Damiano De Mattei daje123
+- Damiano De Mattei
