@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
   profileMenuItem: {
     paddingVertical: 12,
     paddingHorizontal: 16,
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    marginTop: 20,
+    width: '100%',
   },
 
   //SIDEBAR BUTTON
@@ -212,15 +216,13 @@ const styles = StyleSheet.create({
   homeRow: {
     flexDirection: 'row',
     marginLeft: 20,
+    marginBottom: 20,
     borderWidth: 1,
   },
   homeCell: {
     flex: 1,
-    minWidth: 0,
     overflow: 'hidden',
     borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   
   //CALENDAR

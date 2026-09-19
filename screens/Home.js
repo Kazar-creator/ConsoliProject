@@ -6,12 +6,8 @@ import SidebarButton from '../components/SidebarButton';
 import CustomButton from '../components/CustomButton';
 import AppCalendar from '../components/AppCalendar';
 import AppHeader from '../components/AppHeader';
+import HomeCell from '../components/HomeCell';
 import styles from '../styles/AppStyles';
-
-//Import delle Immagini
-import miurLogo from '../assets/miurLogo.png';
-import itsLogo from '../assets/itsWideLogo.png';
-import profileLogo from '../assets/profileLogo.png';
 
 export default function Home({navigation}) {
 
@@ -56,8 +52,7 @@ export default function Home({navigation}) {
           <View style={styles.homeRow}>
 
             {/* WELCOME */}
-            <View style={styles.homeCell}>
-
+            <HomeCell alignItems='center' justifyContent='center'>
               <Text style={styles.welcomeTitle}>BENVENUTO/A NEL PORTALE CV</Text>
               
               <View style={{flexDirection: 'row', gap: 15}}>
@@ -78,29 +73,97 @@ export default function Home({navigation}) {
                 >
                 </CustomButton>
               </View>
-            </View>
+            </HomeCell>
       
-            {/* CALENDAR */}
-            <View style={[styles.homeCell, {flexDirection: 'column'}]}>
+            {/* EVENTS LIST */}
+            <HomeCell height={200}>
+              <ScrollView style={styles.ScrollContainer}>
+                <View>
+                  <Text>
+                    RIGA 1
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 2
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 3
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 4
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 5
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 6
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 7
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 8
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 9
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 10
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 11
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 12
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    RIGA 13
+                  </Text>
+                </View>
+              </ScrollView>
+            </HomeCell>
+            
+          </View>
 
+          {/* SECOND ROW: CALENDAR AND ??? */}
+          <View style={styles.homeRow}>
+
+            {/* CALENDAR */}
+            <HomeCell>
               <AppCalendar onDayPress={(day) => console.log('Giorno selezionato:', day.dateString)}/>
 
               <View style={styles.calendarDetailBox}>
                 <Text style={styles.calendarDetailText}>BOX DETTAGLIO DEL GIORNO SELEZIONATO</Text>
               </View>
-            </View>
-            
-          </View>
+            </HomeCell>
 
-          {/* SECOND ROW: ??? AND ??? */}
-          <View style={styles.homeRow}>
-            <View style={styles.homeCell}>
-
-            </View>
-
-            <View style={styles.homeCell}>
+            {/* ??? */}
+            <HomeCell>
               
-            </View>
+            </HomeCell>
           </View>
 
           {/* FOOTER */}
