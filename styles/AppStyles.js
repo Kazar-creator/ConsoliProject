@@ -255,9 +255,176 @@ const styles = StyleSheet.create({
   calendarDetailBox: {
     marginTop: 10,
     borderWidth: 1,
+    padding: 10,
   },
   calendarDetailText: {
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+  //EVENT LIST (nel box dettaglio giorno selezionato)
+  eventListItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dee2e6',
+  },
+  eventListDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  eventListName: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#333333',
+  },
+  eventListTime: {
+    fontSize: 12,
+    color: '#6c757d',
+    marginTop: 2,
+  },
+  addEventButton: {
+    marginTop: 10,
+    paddingVertical: 10,
+    borderRadius: 8,
+    backgroundColor: '#008DC9',
+    alignItems: 'center',
+  },
+  addEventButtonText: {
+    color: '#ffffff',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+
+  //EVENT FORM MODAL
+  eventModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  eventModalBox: {
+    width: 420,
+    maxWidth: '92%',
+    maxHeight: '85%',
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 20,
+    ...Platform.select({
+      web: {
+        boxShadow: '2px 2px 10px rgba(51, 51, 51, 0.4)',
+      },
+      default: {
+        shadowColor: '#333333',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
+        elevation: 10,
+      },
+    }),
+  },
+  eventModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#154f78',
+  },
+  eventModalDate: {
+    fontSize: 13,
+    color: '#6c757d',
+    marginBottom: 15,
+    textTransform: 'capitalize',
+  },
+  eventModalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  eventModalTextArea: {
+    height: 70,
+    textAlignVertical: 'top',
+  },
+  eventModalColorRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 15,
+  },
+  eventModalColorDot: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: 'transparent',
+  },
+  eventModalColorDotSelected: {
+    borderColor: '#333333',
+  },
+  eventModalChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 5,
+  },
+  eventModalChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+    backgroundColor: '#f8f9fa',
+  },
+  eventModalChipSelected: {
+    backgroundColor: '#008DC9',
+    borderColor: '#008DC9',
+  },
+  eventModalChipText: {
+    fontSize: 13,
+    color: '#333333',
+  },
+  eventModalChipTextSelected: {
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  eventModalActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 10,
+    marginTop: 15,
+  },
+  eventModalButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+  },
+  eventModalCancelButton: {
+    backgroundColor: '#f8f9fa',
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+  },
+  eventModalCancelButtonText: {
+    color: '#333333',
+    fontWeight: '600',
+  },
+  eventModalSaveButton: {
+    backgroundColor: '#008DC9',
+  },
+  eventModalSaveButtonText: {
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  eventModalDeleteButton: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#DC3545',
+    marginRight: 'auto',
+  },
+  eventModalDeleteButtonText: {
+    color: '#DC3545',
+    fontWeight: '600',
   },
   
   /*-------------------------PROFILE-------------------------*/

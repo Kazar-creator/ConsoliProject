@@ -1,15 +1,84 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 
 import AppSidebar from '../components/AppSidebar';
 import CustomButton from '../components/CustomButton';
 import AppCalendar from '../components/AppCalendar';
 import AppHeader from '../components/AppHeader';
 import HomeCell from '../components/HomeCell';
+import EventFormModal from '../components/EventFormModal';
 import styles from '../styles/AppStyles';
 
+// Converte 'YYYY-MM-DD' (formato usato dal calendario) in 'DD:MM:YYYY' per la visualizzazione
+function formatDateForTitle(dateString) {
+  if (!dateString) return '';
+  const [year, month, day] = dateString.split('-');
+  return `${day}/${month}/${year}`;
+}
+
 export default function Home({navigation}) {
+
+  // events: { 'YYYY-MM-DD': [ { id, date, name, allDay, startTime, endTime, description, color, reminder }, ... ] }
+  const [events, setEvents] = useState({});
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+
+  // Pallini colorati da mostrare nel calendario per ogni giorno con eventi
+  const markedDates = Object.keys(events).reduce((acc, date) => {
+    const dayEvents = events[date];
+    if (dayEvents && dayEvents.length > 0) {
+      acc[date] = { dots: dayEvents.map((e) => ({ color: e.color })) };
+    }
+    return acc;
+  }, {});
+
+  const selectedDayEvents = selectedDate ? (events[selectedDate] || []) : [];
+
+  const handleDayPress = (day) => {
+    setSelectedDate(day.dateString);
+  };
+
+  const handleAddEventPress = () => {
+    setEditingEvent(null);
+    setModalVisible(true);
+  };
+
+  const handleEditEvent = (event) => {
+    setEditingEvent(event);
+    setSelectedDate(event.date);
+    setModalVisible(true);
+  };
+
+  const handleSaveEvent = (eventData) => {
+    setEvents((prev) => {
+      const dayEvents = prev[eventData.date] ? [...prev[eventData.date]] : [];
+      const index = dayEvents.findIndex((e) => e.id === eventData.id);
+      if (index >= 0) {
+        dayEvents[index] = eventData;
+      } else {
+        dayEvents.push(eventData);
+      }
+      return { ...prev, [eventData.date]: dayEvents };
+    });
+    setModalVisible(false);
+    setEditingEvent(null);
+  };
+
+  const handleDeleteEvent = (eventId) => {
+    setEvents((prev) => {
+      const dayEvents = (prev[selectedDate] || []).filter((e) => e.id !== eventId);
+      return { ...prev, [selectedDate]: dayEvents };
+    });
+    setModalVisible(false);
+    setEditingEvent(null);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setEditingEvent(null);
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -132,10 +201,40 @@ export default function Home({navigation}) {
 
             {/* CALENDAR */}
             <HomeCell>
-              <AppCalendar onDayPress={(day) => console.log('Giorno selezionato:', day.dateString)}/>
+              <AppCalendar
+                selectedDate={selectedDate}
+                markedDates={markedDates}
+                onDayPress={handleDayPress}
+              />
 
               <View style={styles.calendarDetailBox}>
-                <Text style={styles.calendarDetailText}>BOX DETTAGLIO DEL GIORNO SELEZIONATO</Text>
+                <Text style={styles.calendarDetailText}>
+                  {selectedDate
+                    ? `EVENTI DEL ${formatDateForTitle(selectedDate)}`
+                    : 'BOX DETTAGLIO DEL GIORNO SELEZIONATO'}
+                </Text>
+
+                {selectedDayEvents.map((event) => (
+                  <TouchableOpacity
+                    key={event.id}
+                    style={styles.eventListItem}
+                    onPress={() => handleEditEvent(event)}
+                  >
+                    <View style={[styles.eventListDot, { backgroundColor: event.color }]} />
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.eventListName}>{event.name}</Text>
+                      <Text style={styles.eventListTime}>
+                        {event.allDay ? 'Tutto il giorno' : `${event.startTime} - ${event.endTime}`}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+
+                {selectedDate && (
+                  <TouchableOpacity style={styles.addEventButton} onPress={handleAddEventPress}>
+                    <Text style={styles.addEventButtonText}>+ Aggiungi evento</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </HomeCell>
 
@@ -159,6 +258,16 @@ export default function Home({navigation}) {
         </ScrollView>
         
       </View>
+
+      {/* FORM AGGIUNTA/MODIFICA EVENTO */}
+      <EventFormModal
+        visible={modalVisible}
+        date={selectedDate}
+        existingEvent={editingEvent}
+        onClose={handleCloseModal}
+        onSave={handleSaveEvent}
+        onDelete={handleDeleteEvent}
+      />
 
     </View>
   );

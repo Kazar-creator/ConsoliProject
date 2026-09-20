@@ -2,27 +2,38 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import CalendarDay from './CalendarDay';
 import styles from '../styles/AppStyles';
 
-export default function AppCalendar({ onDayPress, markedDates = {} }) {
+// selectedDate: stringa 'YYYY-MM-DD' del giorno attualmente selezionato (gestita dal genitore)
+// markedDates: oggetto { 'YYYY-MM-DD': { dots: [{ color }, ...] } } con i pallini degli eventi
+
+export default function AppCalendar({ onDayPress, selectedDate, markedDates = {} }) {
+
   const [selected, setSelected] = useState('');
 
   const handleDayPress = (day) => {
-    setSelected(day.dateString);
     if (onDayPress) onDayPress(day);
   };
 
+  /* Aggiunge il flag "selected" al giorno correntemente selezionato, senza
+  perdere i pallini eventuali già presenti per quella data. */
+  const fullMarkedDates = { ...markedDates };
+  if (selectedDate) {
+    fullMarkedDates[selectedDate] = {
+      ...(fullMarkedDates[selectedDate] || {}),
+      selected: true,
+    };
+  }
+
   return (
     <View style={styles.calendarContainer}>
-
+ 
       <Calendar
         style={styles.calendar}
         onDayPress={handleDayPress}
-        markedDates={{
-          ...markedDates,
-          [selected]: { selected: true, selectedColor: '#154f78' },
-        }}
-        markingType='dot'
+        markedDates={fullMarkedDates}
+        dayComponent={(props) => <CalendarDay {...props} />}
         theme={{
           todayTextColor: '#154f78',
           arrowColor: '#154f78',
@@ -39,7 +50,7 @@ export default function AppCalendar({ onDayPress, markedDates = {} }) {
           textDayHeaderFontSize: 13,
         }}
       />
-      
+ 
     </View>
   );
 }
