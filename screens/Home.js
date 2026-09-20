@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Text, View, ScrollView, Image, Pressable } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 
-import SidebarButton from '../components/SidebarButton';
+import AppSidebar from '../components/AppSidebar';
 import CustomButton from '../components/CustomButton';
 import AppCalendar from '../components/AppCalendar';
 import AppHeader from '../components/AppHeader';
@@ -22,28 +22,7 @@ export default function Home({navigation}) {
       <View style={styles.bodyContainer}>
 
         {/* SIDEBAR */}
-        <View style={styles.sideBar}>
-          <SidebarButton 
-            text="Home" 
-            onPress={() => navigation.navigate('Home')}
-            disabled>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Studenti" 
-            onPress={() => navigation.navigate('Students')}>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Aziende" 
-            onPress={() => navigation.navigate('Companies')}>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Logout" 
-            onPress={() => navigation.navigate('Login')}>
-          </SidebarButton>
-        </View>
+        <AppSidebar navigation={navigation} activeRoute="Home" />
 
         {/* PAGINA SCROLLABILE */}
         <ScrollView style={styles.scrollContainer}>
