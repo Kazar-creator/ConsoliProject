@@ -1,17 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Text, View, ScrollView, Image, Pressable } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 
-import SidebarButton from '../components/SidebarButton';
-import CustomButton from '../components/CustomButton';
+import AppSidebar from '../components/AppSidebar';
 import AppHeader from '../components/AppHeader';
 import DataRow from '../components/DataRow';
 import styles from '../styles/AppStyles';
-
-//Import delle Immagini
-import miurLogo from '../assets/miurLogo.png';
-import itsLogo from '../assets/itsWideLogo.png';
-import profileLogo from '../assets/profileLogo.png';
 
 export default function Profile({navigation}) {
 
@@ -26,27 +20,7 @@ export default function Profile({navigation}) {
       <View style={styles.bodyContainer}>
 
         {/* SIDEBAR */}
-        <View style={styles.sideBar}>
-          <SidebarButton 
-            text="Home" 
-            onPress={() => navigation.navigate('Home')}>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Studenti" 
-            onPress={() => navigation.navigate('Students')}>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Aziende" 
-            onPress={() => navigation.navigate('Companies')}>
-          </SidebarButton>
-
-          <SidebarButton 
-            text="Logout" 
-            onPress={() => navigation.navigate('Login')}>
-          </SidebarButton>
-        </View>
+        <AppSidebar navigation={navigation} activeRoute="Profile" />
 
         {/* PAGINA SCROLLABILE */}
         <ScrollView style={styles.scrollContainer}>
